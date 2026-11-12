@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: JKB Grounds API – FastAPI auf Lambda (Mangum + HTTP API)
+
+Parameters:
+  SupabaseUrl:
+    Type: String
+  SupabaseKey:
+    Type: String
+    NoEcho: true
+  StripeSecretKey:
+    Type: String
+    NoEcho: true
+  AppUrl:
+    Type: String
+    Description: URL des Amplify-Frontends (für Stripe-Redirects)
+    Default: http://localhost:8082
+
+Globals:
+  Function:
+    Timeout: 29
+    MemorySize: 512
+
+Resources:
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: ['*']
+        AllowMethods: ['*']
+        AllowHeaders: ['*']
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: jkb-grounds-marktplatz-api
+      CodeUri: .build
+      Handler: lambda_handler.handler
+      Runtime: python3.12
+      Architectures: [arm64]
+      Environment:
+        Variables:
+          SUPABASE_URL: !Ref SupabaseUrl
+          SUPABASE_KEY: !Ref SupabaseKey
+          STRIPE_SECRET_KEY: !Ref StripeSecretKey
+          STRIPE_COMMISSION_RATE: '0.05'
+          APP_URL: !Ref AppUrl
+      Events:
+        Root:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /
+            Method: ANY
+        Proxy:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  ApiUrl:
+    Description: Basis-URL der API (als EXPO_PUBLIC_API_URL im Frontend eintragen)
+    Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com

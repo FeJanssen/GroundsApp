@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+supabase
+python-dotenv
+stripe
+bcrypt
+httpx
+mangum

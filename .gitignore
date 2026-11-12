@@ -1,0 +1,10 @@
+
+.env
+.venv/
+node_modules/
+.expo/
+dist/
+.aws-sam/
+__pycache__/
+samconfig.toml
+backend/.build/
