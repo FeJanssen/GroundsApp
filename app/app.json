@@ -13,9 +13,14 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fejanssen.jkbgroundsapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.fejanssen.jkbgroundsapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -30,6 +35,13 @@
     "plugins": [
       "expo-router"
     ],
-    "scheme": "jkbgrounds"
+    "scheme": "jkbgrounds",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6c1d9702-3b7c-424c-b514-c0ba0460369f"
+      }
+    },
+    "owner": "fejanssen"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://ikfhevdow0.execute-api.eu-central-1.amazonaws.com"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://ikfhevdow0.execute-api.eu-central-1.amazonaws.com"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://ikfhevdow0.execute-api.eu-central-1.amazonaws.com"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
